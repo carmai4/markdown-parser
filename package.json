@@ -1,0 +1,23 @@
+{
+  "name": "markdown-parser",
+  "version": "1.0.0",
+  "description": "parses markdown string and returns html",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carmai4/markdown-parser.git"
+  },
+  "author": "Caroline Maiorana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carmai4/markdown-parser/issues"
+  },
+  "homepage": "https://github.com/carmai4/markdown-parser#readme",
+  "dependencies": {
+    "jest": "^27.0.6",
+    "minimist": "^1.2.5"
+  }
+}
