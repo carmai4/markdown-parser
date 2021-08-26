@@ -18,6 +18,7 @@
   "homepage": "https://github.com/carmai4/markdown-parser#readme",
   "dependencies": {
     "jest": "^27.0.6",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.5"
   }
 }
