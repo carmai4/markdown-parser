@@ -13,31 +13,33 @@ function parse(splitStr) {
   let isParagraphOpen = false;
   let isListOpen = false;
 
+  const closeOpenList = () => {
+    if (isListOpen) {
+      result += "</ul>";
+      isListOpen = false;
+    }
+  };
+
+  const closeOpenParagraph = () => {
+    if (isParagraphOpen) {
+      result += "</p>";
+      isParagraphOpen = false;
+    }
+  };
+
   // loop over the array from the beginning
   for (let i = 0; i < splitStr.length; i++) {
     const str = splitStr[i].trim();
 
     if (str.startsWith("##")) {
-      if (isListOpen) {
-        result += "</ul>";
-        isListOpen = false;
-      }
-      if (isParagraphOpen) {
-        result += "</p>";
-        isParagraphOpen = false;
-      }
+      closeOpenList();
+      closeOpenParagraph();
       result += `<h2>${str.substr(2)}</h2>`;
       continue;
     }
     if (str.startsWith("#")) {
-      if (isListOpen) {
-        result += "</ul>";
-        isListOpen = false;
-      }
-      if (isParagraphOpen) {
-        result += "</p>";
-        isParagraphOpen = false;
-      }
+      closeOpenList();
+      closeOpenParagraph();
       result += `<h1>${str.substr(1)}</h1>`;
       continue;
     }
@@ -46,10 +48,7 @@ function parse(splitStr) {
       const text = str.split("-")[1].trim();
       if (isListOpen) result += `<li>${text}</li>`;
       else {
-        if (isParagraphOpen) {
-          result += "</p>";
-          isParagraphOpen = false;
-        }
+        closeOpenParagraph();
         result += `<ul><li>${text}</li>`;
         isListOpen = true;
       }
@@ -62,25 +61,15 @@ function parse(splitStr) {
         isParagraphOpen = false;
       } else result += str;
     } else {
-      if (isListOpen) {
-        result += "</ul>";
-        isListOpen = false;
-      }
-
+      closeOpenList();
       result += `<p>${str}`;
       isParagraphOpen = true;
     }
   }
 
   // close any open tags
-  if (isListOpen) {
-    result += "</ul>";
-    isListOpen = false;
-  }
-  if (isParagraphOpen) {
-    result += "</p>";
-    isParagraphOpen = false;
-  }
+  closeOpenList();
+  closeOpenParagraph();
 
   return (result += "</body></html>");
 }
